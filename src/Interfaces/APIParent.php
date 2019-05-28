@@ -33,15 +33,24 @@ class APIParent
     }
     protected static function formatData($data, $formatTo = "json")
     {
-        $result = null;
+        $result = array("status"=> "ok", "content"=> null);
 
         try {
             switch ($formatTo) {
                 case "json":
-                    $result = json_decode($data);
+                    $result["content"] = json_decode($data);
                     break;
                 case "xml":
-                    $result = simplexml_load_string($data);
+                    $dataFormatted = simplexml_load_string($data);
+                    if (isset($dataFormatted->response->error)) {
+                        $result["status"]= "error";
+                        $result["content"]= $dataFormatted->response->error;
+                    } elseif (isset($dataFormatted->response->errors)) {
+                        $result["status"]= "error";
+                        foreach ($dataFormatted->response->errors as $row) {
+                            $result["content"][]= $row;
+                        }
+                    }
                     break;
             }
         } catch (\Exception $e) {
