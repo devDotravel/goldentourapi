@@ -42,6 +42,7 @@ class APIParent
                     break;
                 case "xml":
                     $dataFormatted = simplexml_load_string($data);
+                    $result["content"] = $dataFormatted;
                     if (isset($dataFormatted->response->error)) {
                         $result["status"]= "error";
                         $result["content"]= $dataFormatted->response->error;
