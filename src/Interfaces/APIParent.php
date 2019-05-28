@@ -43,12 +43,12 @@ class APIParent
                 case "xml":
                     $dataFormatted = simplexml_load_string($data);
                     $result["content"] = $dataFormatted;
-                    if (isset($dataFormatted->response->error)) {
+                    if (isset($dataFormatted->error)) {
                         $result["status"]= "error";
-                        $result["content"]= $dataFormatted->response->error;
-                    } elseif (isset($dataFormatted->response->errors)) {
+                        $result["content"]= $dataFormatted->error;
+                    } elseif (isset($dataFormatted->errors)) {
                         $result["status"]= "error";
-                        foreach ($dataFormatted->response->errors as $row) {
+                        foreach ($dataFormatted->errors as $row) {
                             $result["content"][]= $row;
                         }
                     }
