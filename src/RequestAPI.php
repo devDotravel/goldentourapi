@@ -45,7 +45,6 @@ class RequestAPI extends APIParent
      * Returns all categories.
      *
      * @param String $cityID The unique identifier of the City you wish to retrieve cityid from,
-     *  the identifier is found in cities.aspx.
      * @param String $language The unique identifier of the Language that you find from below table. This is optional.
      * @return object created with simplexml library
      */
@@ -73,7 +72,6 @@ class RequestAPI extends APIParent
      * Returns list of all products in a given category.
      *
      * @param String $categoryID The unique identifier of the category you wish to retrieve products from,
-     *  the identifier is found in categories.aspx.
      * @param String $currencyCode Pass currency code.
      * @param String $from from date.
      * @param String $to Pass to date.
@@ -217,14 +215,8 @@ class RequestAPI extends APIParent
      * To reserve the pax for any product through xml.
      *
      * @param String $productID The unique identifier of the product you wish to retrieve paxreservation,
-     * the identifier is found in productlist.aspx.
-     * agentid Pass agent's id.
      * @param String $travelDate Format of travel date should be dd/MM/yyyy.
-     * (When product type is add on and flag allowed date is 'N' then it is not required.
-     * Also in attraction Open Dated ticket it is not required.)
      * @param String $scheduleID Required,
-     * The unique identifier of schedule for the product you wish to retrieve paxreservation,
-     * the identifier is found in Product Detail.
      * @param String $lockPAX The number of total pax that you wish to reserve.
      * @return object created with simplexml library
      */
@@ -260,60 +252,10 @@ class RequestAPI extends APIParent
      * Guide for booking through xml.
      *
      * @param array $customerINFO
-     *  START CONTENTS INSIDE CUSTOMER
-     *  title The title of Customer like Mr., Miss., Dr. etc. It is required field.
-     *  firstName The first name of customer. It is required field.
-     *  lastName The last name of customer. It is required field.
-     *  email The Email address of customer. It is required field.
-     *  address1 The address 1 of customer. It is required field.
-     *  address2 The address 2 of customer.
-     *  city The city of customer. It is required field.
-     *  county The county of customer.
-     *  postCode The post Code where customer lives. It is required field.
-     *  countryCode The code of country where customer lives.
-     *  mobile The mobile number of customer.
-     *  <flagnewsLetter> If customer wants to receive newsletter send 'Y' for yes else 'N' for no.
-     *  <sendEmail> If customer wants an Email of Booking then send 'Y' or 'Yes' else 'N' or 'No'.
      * @param array $productINFO
-     *  <product> The container where all the details of product will be passed.
-     *  <ticketRefNumber> If ticketRefNumber will be inserted then this ticket number will be used otherwise it will be generated automatically.
-     *  <travelDate> Format of travel date should be dd/MM/yyyy.(When product type is add on and flag allowed date is 'N' then it is not required. Also in attraction Open Dated ticket it is not required.)
-     *  <productId> Unique Id assigned to product. Please see (productdetails.aspx).
-     *  <scheduleId> Unique Id of schedule. Please see (productdetails.aspx).
-     *  <pickuptimeId> The unique Id of Pick up and Time which is selected. Please see (productdetails.aspx).
-     *  <droppointId> The unique Id of Drop Point which is selected. It required to pass for Shuttle Transfer Type Product.
-     *  <paxtoken> The pax token which will received by paxreservation API product wise.
-     *  <referenceNumber> Pass reference number.It is not required field.
-     *  <otherRequirement> The special requirement of customer for the product selected.
-     *  <nights> In case of only 'Hotel' product type it is required field.
-     *  <promotionalCode> The promotional code of the customer.
-     *  <paxInfo> The main container of all the pax(s).
-     *  <unit> The container which will contain the unitId and paxCount.
-     *  <unitId> unitId is the unique Id of each price unit (Adult, Child, etc.). Please see (productdetails.aspx). It is required field.
-     *  <paxCount> The quantity of each unit. It is required field (Only integer value is accepted).
-     *  <transferInfo> When product type is transfer then this container is required and all the tags inside the tag are required.
-     *  <airlineName> Name of airline.
-     *  <flightNumber> Number of flight.
-     *  <transferTime> Time of transfer. Format of time should be HH:MM AM/PM (For Shuttle type transfer product)
-     *  <hotelName> Name of hotel.
-     *  <hotelAddress> Address of hotel.
-     *  <postCode> Postcode of hotel.
-     *  <mobile> Mobile number of Customer.
-     *  <origin> Origin.
-     *  <destination> Destination.
-     *  <greetingName> The name of person which is to be transferred.
      * @param String $currencyCode Pass any currency code from following table.
      * @param String $paymentMode 'C' or 'A' (C = Credit card and A = On Account).
      * @param array $cardPaymentINFO
-     * <nameOnCard> Name which is on credit card.
-     *  <cardNumber> Credit Card Number.
-     *  <cardType> Enter any type from following table.
-     *  <expiryDate> Expiry date of credit card in mm/yyyy format.
-     *  <issueNumber> Issue number of credit card.
-     *  <cardVerificationNumber> Card Verification number of credit card.
-     *  <enabled3DSecure> 'Y' or 'N' (Y = 3DEnroll for transaction and N = No 3DEnroll for transaction ).
-     *  <response3DURL> Website address where should be redirection performed from bank's
-     * website after 3DEnroll. This address must be XML agent's website URL.
      * @param String $securitykeyMETHOD
      * @param String $flagPriceDisplay 'Y' or 'N' (Y = Display price in ticket and N = Hide price in ticket).
      * @param String $flagCreditCardEncrypted 'Y' or 'N' (Y = If credit card details are encrypted and N = If credit card details are not encrypted).
