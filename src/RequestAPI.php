@@ -214,17 +214,17 @@ class RequestAPI extends APIParent
     /**
      * To reserve the pax for any product through xml.
      *
-     * @param String $productID The unique identifier of the product you wish to retrieve paxreservation,
+     * @param Int $productID The unique identifier of the product you wish to retrieve paxreservation,
      * @param String $travelDate Format of travel date should be dd/MM/yyyy.
-     * @param String $scheduleID Required,
-     * @param String $lockPAX The number of total pax that you wish to reserve.
+     * @param Int $scheduleID Required,
+     * @param Int $lockPAX The number of total pax that you wish to reserve.
      * @return object created with simplexml library
      */
     public function paxReservation(
-        String $productID,
+        Int $productID,
         String $travelDate,
-        String $scheduleID,
-        String $lockPAX
+        Int $scheduleID,
+        Int $lockPAX
     ) {
         try {
             $body = array(
