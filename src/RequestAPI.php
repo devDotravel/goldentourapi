@@ -227,19 +227,22 @@ class RequestAPI extends APIParent
         Int $lockPAX
     ) {
         try {
-            $body = array(
+            $body = \DoTravel\GoldenTour\Utils\XMLSerializer::generateValidXmlFromArray(array(
                 "productid"=>$productID,
                 "key"=> $this->apiKey,
                 "agentid" => $this->agentID,
                 "traveldate" => $travelDate,
                 "scheduleid" =>$scheduleID,
                 "lockpax" =>$lockPAX,
-            );
+            ));
 
             $result = self::formatResult($this->client->post(
                 $this->url . "/xml/paxreservation.aspx",
                 array(
-                        "form_params" => $body,
+                    'headers' => [
+                        'Content-Type' => 'text/xml; charset=UTF8',
+                    ],
+                        "body" => $body,
                 )
             ), "xml");
         } catch (\Exception $e) {
@@ -298,7 +301,10 @@ class RequestAPI extends APIParent
             $result = self::formatResult($this->client->post(
                 $this->url . "/xml/booking.aspx",
                 array(
-                    "form_params" => $body,
+                    'headers' => [
+                        'Content-Type' => 'text/xml; charset=UTF8',
+                    ],
+                        "body" => $body,
                     )
             ), "xml");
         } catch (\Exception $e) {
