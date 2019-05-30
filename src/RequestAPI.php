@@ -298,7 +298,7 @@ class RequestAPI extends APIParent
             } elseif (is_array($data)) {
                 $body = \DoTravel\GoldenTour\Utils\XMLSerializer::generateValidXmlFromArray($data);
             }
-            $result = self::formatResult($this->client->post(
+            $result = self::formatResult($this->client->get(
                 $this->url . "/xml/booking.aspx",
                 array(
                     'headers' => [
