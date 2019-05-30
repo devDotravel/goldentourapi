@@ -6,42 +6,30 @@ use DoTravel\GoldenTour\Interfaces\InitialUtils;
 class GoldenTourHour extends InitialUtils
 {
     public $id;
+    public $hour;
 
-    public $max;
+    public $block;
 
-    public $min;
+    public $noblock;
 
-    public $name;
+    public $available;
 
-    public $name_nospace;
-
-    public $order;
-
-    public $price;
-
-    public $tag;
 
     public function __construct(
         $data,
         $id = null,
-        $max = null,
-        $min = null,
-        $name = null,
-        $name_nospace = null,
-        $order = null,
-        $price = null,
-        $tag = null
+        $hour = null,
+        $block = null,
+        $noblock = null,
+        $available = null
     ) {
         parent::__construct($data);
         if (!isset($data)) {
             $this->id = $id;
-            $this->max = $max;
-            $this->min = $min;
-            $this->name = $name;
-            $this->name_nospace = $name_nospace;
-            $this->order = $order;
-            $this->price = $price;
-            $this->tag = $tag;
+            $this->hour = $hour;
+            $this->block = $block;
+            $this->noblock = $min;
+            $this->available = $name;
         }
     }
 }
