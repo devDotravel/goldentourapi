@@ -3,7 +3,7 @@ namespace  DoTravel\GoldenTour\Model;
 
 use DoTravel\GoldenTour\Interfaces\InitialUtils;
 
-class GoldenTourHour extends InitialUtils
+class GoldenTourPrice extends InitialUtils
 {
     public $id;
 
