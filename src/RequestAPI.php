@@ -279,7 +279,6 @@ class RequestAPI extends APIParent
         try {
             if (!isset($data)) {
                 $data = array(
-                "Booking"=> array(
                     "agentid" => $this->agentID,
                     "key"=> $this->apiKey,
                     "customer"=>$customerINFO,
@@ -290,14 +289,10 @@ class RequestAPI extends APIParent
                     "securitykeymethod"=> $securitykeyMETHOD,
                     "flagPriceDisplay"=> $flagPriceDisplay,
                     "flagCreditCardEncrypted"=> $flagCreditCardEncrypted,
-                    ),
                 );
             }
-            if (is_object($data)) {
-                $body = \DoTravel\GoldenTour\Utils\XMLSerializer::generateValidXmlFromObj($data);
-            } elseif (is_array($data)) {
-                $body = \DoTravel\GoldenTour\Utils\XMLSerializer::generateValidXmlFromArray($data);
-            }
+            $body = \DoTravel\GoldenTour\Utils\XMLSerializer::generateValidXmlFromArray($data);
+            
             $result = self::formatResult($this->client->post(
                 $this->url . "/xml/booking.aspx",
                 array(
