@@ -24,16 +24,22 @@ class APIParent
 
     protected static function formatResult($response, $format = "json")
     {
-        if ($response != -1) {
-            $result = self::formatData($response->getBody(), $format);
-        } else {
+        try {
+            if ($response != -1) {
+                $result = self::formatData($response->getBody(), $format);
+            } else {
+                $result = -1;
+            }
+        } catch (\Exception $e) {
             $result = -1;
         }
+
         return $result;
     }
+
     protected static function formatData($data, $formatTo = "json")
     {
-        $result = array("status"=> "ok", "content"=> null);
+        $result = array("status" => "ok", "content" => null);
 
         try {
             switch ($formatTo) {
@@ -42,15 +48,20 @@ class APIParent
                     break;
                 case "xml":
                     $dataFormatted = simplexml_load_string($data);
-                    $result["content"] = $dataFormatted;
                     if (isset($dataFormatted->error)) {
-                        $result["status"]= "error";
-                        $result["content"]= $dataFormatted->error;
+                        $result["status"] = "error";
+                        $result["content"] = $dataFormatted->error;
                     } elseif (isset($dataFormatted->errors)) {
-                        $result["status"]= "error";
-                        foreach ($dataFormatted->errors as $row) {
-                            $result["content"][]= $row;
+                        $result["status"] = "error";
+                        if (isset($dataFormatted->errors)) {
+                            foreach ($dataFormatted->errors as $row) {
+                                if (isset($row)) {
+                                    $result["content"][] = $row->error->description;
+                                }
+                            }
                         }
+                    } else {
+                        $result["content"] = $dataFormatted;
                     }
                     break;
             }
@@ -59,6 +70,7 @@ class APIParent
         }
         return $result;
     }
+
     protected static function formatResultToArray($response)
     {
         if (!is_int($response)) {
