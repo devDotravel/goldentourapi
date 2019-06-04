@@ -37,7 +37,15 @@ class XMLSerializer
                     $key = $node_name;
                 }
 
-                $xml .= '<' . $key . '>' . self::generateXmlFromArray($value, $node_name) . '</' . $key . '>';
+                if ($key != "") {
+                    $xml .= '<' . $key . '>';
+                }
+
+                $xml .= self::generateXmlFromArray($value, $node_name);
+
+                if ($key != "") {
+                    $xml .= '</' . $key . '>';
+                }
             }
         } else {
             $xml = htmlspecialchars($array, ENT_QUOTES);

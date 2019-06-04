@@ -1,4 +1,5 @@
 <?php
+
 namespace DoTravel\GoldenTour;
 
 use GuzzleHttp\Client;
@@ -9,16 +10,18 @@ class RequestAPI extends APIParent
 {
     protected $agentID;
     protected $terminalID;
+
     public function __construct($apiKey, $agentID, $terminalID = "", $url = "http://www.goldentourscoachtours.co.uk/")
     {
         parent::__construct($url, $apiKey);
         $this->agentID = $agentID;
         $this->terminalID = $terminalID;
     }
+
     /**
      * Returns all cities.
      *
-     * @param String  $language is a Optional params
+     * @param String $language is a Optional params
      * @return object created with simplexml library
      */
     public function getCities(String $language = "English")
@@ -30,12 +33,12 @@ class RequestAPI extends APIParent
             $result = self::formatResult($this->client->get(
                 $this->url . "xml/cities.aspx",
                 array(
-                "query" => $params,
+                    "query" => $params,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
 
         return $result;
@@ -52,22 +55,23 @@ class RequestAPI extends APIParent
     {
         try {
             $params = array(
-                "cityid"=>$cityID,
-                "key"=> $this->apiKey,
+                "cityid" => $cityID,
+                "key" => $this->apiKey,
                 "languageid" => \DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$language]
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "/xml/categories.aspx",
+                $this->url . "xml/categories.aspx",
                 array(
                     "query" => $params,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Returns list of all products in a given category.
      *
@@ -83,58 +87,61 @@ class RequestAPI extends APIParent
         String $currencyCode,
         String $from,
         String $to,
-        String $language = "English"
-    ) {
+        $language = "English"
+    )
+    {
         try {
             $params = array(
-                "category_id"=>$categoryID,
-                "key"=> $this->apiKey,
-                "currencycode"=>$currencyCode,
-                "fromdt"=>$from,
-                "todt"=>$to,
+                "category_id" => $categoryID,
+                "key" => $this->apiKey,
+                "currencycode" => $currencyCode,
+                "fromdt" => $from,
+                "todt" => $to,
                 "languageid" => \DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$language]
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "/xml/productlist.aspx",
+                $this->url . "xml/productlist.aspx",
                 array(
                     "query" => $params,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Returns all information about a given product.
      *
      * @param String $productID The unique identifier of the category you wish to retrieve products from,
      * @param String $currencyCode Pass currency code.
-     * @param String $language  The unique identifier of the Language that you find from below table. This is optional.
+     * @param String $language The unique identifier of the Language that you find from below table. This is optional.
      * @return object created with simplexml library
      */
     public function getProductsInfoByID(String $productID, String $currencyCode, String $language = "English")
     {
         try {
             $params = array(
-                "productid"=>$productID,
-                "key"=> $this->apiKey,
-                "currencycode"=>$currencyCode,
+                "productid" => $productID,
+                "key" => $this->apiKey,
+                "currencycode" => $currencyCode,
                 "languageid" => \DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$language]
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "/xml/productdetails.aspx",
+                $this->url . "xml/productdetails.aspx",
                 array(
                     "query" => $params,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Returns how many tickets are available for a product on a given date.
      *
@@ -142,7 +149,7 @@ class RequestAPI extends APIParent
      * @param String $day The day that you wish to check availability for, 1-31.
      * @param String $month The month that you wish to check availability for, 1-12.
      * @param String $year The year that you wish to check availability for.
-     * @param mixed $scheduledID  Optional,The unique identifier of schedule for the product you wish to retrieve availability,
+     * @param mixed $scheduledID Optional,The unique identifier of schedule for the product you wish to retrieve availability,
      * @param mixed $picktimeid For Shuttle Product only,
      * @return object created with simplexml library
      */
@@ -153,35 +160,37 @@ class RequestAPI extends APIParent
         String $year,
         $scheduledID = null,
         $picktimeid = null
-    ) {
+    )
+    {
         try {
             $params = array(
-                "productid"=>$productID,
-                "key"=> $this->apiKey,
-                "day"=>$day,
-                "month"=>$month,
-                "year"=>$year,
+                "productid" => $productID,
+                "key" => $this->apiKey,
+                "day" => $day,
+                "month" => $month,
+                "year" => $year,
                 "scheduleid" => $scheduledID,
-                "picktimeid"=> $picktimeid
+                "picktimeid" => $picktimeid
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "/xml/availability.aspx",
+                $this->url . "xml/availability.aspx",
                 array(
                     "query" => $params,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Returns all products within a search.
      *
      * @param String $searchText The purpose of searchtext is to search products with any text as you supply.
      * @param String $cityID The unique identifier of the City you wish to retrieve cityid from,
-     * @param String $currencyCode  Pass currency code.
+     * @param String $currencyCode Pass currency code.
      * @param String $language The unique identifier of the Language that you find from below table. This is optional.
      * @return object created with simplexml library
      */
@@ -190,14 +199,15 @@ class RequestAPI extends APIParent
         String $cityID,
         String $currencyCode,
         String $language = "English"
-    ) {
+    )
+    {
         try {
             $params = array(
-                "cityid"=>$cityID,
-                "key"=> $this->apiKey,
+                "cityid" => $cityID,
+                "key" => $this->apiKey,
                 "currencycode" => $currencyCode,
                 "searchtext" => $searchText,
-                "languageid" =>  \DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$language]
+                "languageid" => \DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$language]
             );
             $result = self::formatResult($this->client->get(
                 $this->url . "/xml/search.aspx",
@@ -206,11 +216,12 @@ class RequestAPI extends APIParent
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * To reserve the pax for any product through xml.
      *
@@ -225,32 +236,34 @@ class RequestAPI extends APIParent
         String $travelDate,
         Int $scheduleID,
         Int $lockPAX
-    ) {
+    )
+    {
         try {
             $body = \DoTravel\GoldenTour\Utils\XMLSerializer::generateValidXmlFromArray(array(
-                "productid"=>$productID,
-                "key"=> $this->apiKey,
+                "productid" => $productID,
+                "key" => $this->apiKey,
                 "agentid" => $this->agentID,
                 "traveldate" => $travelDate,
-                "scheduleid" =>$scheduleID,
-                "lockpax" =>$lockPAX,
+                "scheduleid" => $scheduleID,
+                "lockpax" => $lockPAX,
             ));
 
             $result = self::formatResult($this->client->post(
-                $this->url . "/xml/paxreservation.aspx",
+                $this->url . "xml/paxreservation.aspx",
                 array(
                     'headers' => [
                         'Content-Type' => 'text/xml; charset=UTF8',
                     ],
-                        "body" => $body,
+                    "body" => $body,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Guide for booking through xml.
      *
@@ -275,39 +288,40 @@ class RequestAPI extends APIParent
         String $flagPriceDisplay,
         String $flagCreditCardEncrypted,
         mixed $data = null
-    ) {
+    )
+    {
         try {
             if (!isset($data)) {
                 $data = array(
-                    "agentid" => $this->agentID,
-                    "key"=> $this->apiKey,
-                    "customer"=>$customerINFO,
-                    "productInfo"=> $productINFO,
-                    "currencycode"=> $currencyCode,
-                    "paymentMode"=> $paymentMode,
-                    "cardPayment"=> $cardPaymentINFO,
-                    "securitykeymethod"=> $securitykeyMETHOD,
-                    "flagPriceDisplay"=> $flagPriceDisplay,
-                    "flagCreditCardEncrypted"=> $flagCreditCardEncrypted,
+                    "agentId" => $this->agentID,
+                    "key" => $this->apiKey,
+                    "customer" => $customerINFO,
+                    "productInfo" => $productINFO,
+                    "currencyCode" => $currencyCode,
+                    "paymentMode" => $paymentMode,
+                    "cardPayment" => $cardPaymentINFO,
+                    "securitykeymethod" => $securitykeyMETHOD,
+                    "flagPriceDisplay" => $flagPriceDisplay,
+                    "flagCreditCardEncrypted" => $flagCreditCardEncrypted
                 );
             }
-            $body = \DoTravel\GoldenTour\Utils\XMLSerializer::generateValidXmlFromArray($data);
-            
+            $body = \DoTravel\GoldenTour\Utils\XMLSerializer::generateValidXmlFromArray($data, "Booking", "");
             $result = self::formatResult($this->client->post(
-                $this->url . "/xml/booking.aspx",
+                $this->url . "xml/booking.aspx",
                 array(
                     'headers' => [
                         'Content-Type' => 'text/xml; charset=UTF8',
                     ],
-                        "body" => $body,
-                    )
+                    "body" => $body,
+                )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Get product open dates.
      *
@@ -321,24 +335,25 @@ class RequestAPI extends APIParent
     {
         try {
             $params = array(
-                "productid"=>$productID,
-                "key"=> $this->apiKey,
+                "productid" => $productID,
+                "key" => $this->apiKey,
                 "status" => $status,
                 "fromdt" => $from,
                 "todt" => $to
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "/xml/getproductdates.aspx",
+                $this->url . "xml/getproductdates.aspx",
                 array(
-                        "query" => $params,
+                    "query" => $params,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Get product open dates with schedules and availability information.
      *
@@ -352,25 +367,26 @@ class RequestAPI extends APIParent
     {
         try {
             $params = array(
-                "productid"=>$productID,
-                "key"=> $this->apiKey,
+                "productid" => $productID,
+                "key" => $this->apiKey,
                 "status" => $status,
                 "fromdt" => $from,
                 "todt" => $to
             );
 
             $result = self::formatResult($this->client->get(
-                $this->url . "/xml/getbookingdates.aspx",
+                $this->url . "xml/getbookingdates.aspx",
                 array(
-                "query" => $params,
+                    "query" => $params,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Returns list of all products from a given xml key.
      *
@@ -382,22 +398,23 @@ class RequestAPI extends APIParent
     {
         try {
             $params = array(
-                "showallproduct"=>$showALL,
-                "key"=> $this->apiKey,
+                "showallproduct" => $showALL,
+                "key" => $this->apiKey,
                 "languageid" => ResourcesAPI::$goldenTourLanguages[$languageid],
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "/xml/productidlist.aspx",
+                $this->url . "xml/productidlist.aspx",
                 array(
-                        "query" => $params,
+                    "query" => $params,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Returns all reviews about a given product.
      *
@@ -408,22 +425,23 @@ class RequestAPI extends APIParent
     {
         try {
             $params = array(
-                "productid"=>$productID,
-                "key"=> $this->apiKey,
+                "productid" => $productID,
+                "key" => $this->apiKey,
             );
 
             $result = self::formatResult($this->client->get(
-                $this->url . "/xml/getproductreviews.aspx",
+                $this->url . "xml/getproductreviews.aspx",
                 array(
-                        "query" => $params,
+                    "query" => $params,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Returns all available and block pickup points about a given product.
      *
@@ -434,22 +452,23 @@ class RequestAPI extends APIParent
     {
         try {
             $params = array(
-                "productid"=>$productID,
-                "key"=> $this->apiKey,
+                "productid" => $productID,
+                "key" => $this->apiKey,
             );
 
             $result = self::formatResult($this->client->get(
-                $this->url . "/xml/blockpickuppoint.aspx",
+                $this->url . "xml/blockpickuppoint.aspx",
                 array(
-                        "query" => $params,
+                    "query" => $params,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Guide to check validity of voucher.
      *
@@ -461,18 +480,19 @@ class RequestAPI extends APIParent
      */
     public function validateTicketIP(
         String $ticketNumber,
-        String $version = "1.0.0",
-        String $command = "ValidateTicket",
+        $version = "1.0.0",
+        $command = "ValidateTicket",
         mixed $commandParameters = null
-    ) {
+    )
+    {
         try {
             $body = \DoTravel\GoldenTour\Utils\XMLSerializer::generateValidXmlFromArray(
                 array(
-                    "request"=> array(
-                        "version"=>$version,
-                        "key"=> $this->apiKey,
+                    "request" => array(
+                        "version" => $version,
+                        "key" => $this->apiKey,
                         "account_id" => $this->accountID,
-                        "terminal_id"=> $this->terminalID,
+                        "terminal_id" => $this->terminalID,
                         "timestamp" => date("YYYY-MM-DD HH:ii:ss"),
                         "command" => $command,
                         "ticket_number" => $ticketNumber,
@@ -481,25 +501,26 @@ class RequestAPI extends APIParent
                 )
             );
             $result = self::formatResult($this->client->post(
-                $this->url . "/process/datatraxvoucher.aspx",
+                $this->url . "process/datatraxvoucher.aspx",
                 array(
                     "form_params" => $body,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Guide to redeem a voucher.
      *
      * @param array $vouchersNumbers An identifier for a voucher to be redeemed.
      * @param String $version API version
      * @param String $command The requested command name. (RedeemVoucher)
-     * @param String $comment  User comment from redemption terminal
-     * @param Int $selectedBus  The bus id of selected bus.
+     * @param String $comment User comment from redemption terminal
+     * @param Int $selectedBus The bus id of selected bus.
      * @return object created with simplexml library
      */
     public function redeemVoucherAPI(
@@ -508,38 +529,40 @@ class RequestAPI extends APIParent
         String $command = "RedeemVoucher",
         String $comment = null,
         Int $selectedBus = null
-    ) {
+    )
+    {
         try {
             $body = \DoTravel\GoldenTour\Utils\XMLSerializer::generateValidXmlFromArray(
                 array(
-                    "request"=> array(
-                    "version"=>$version,
-                    "key"=> $this->apiKey,
-                    "account_id" => $this->accountID,
-                    "terminal_id"=> $this->terminalID,
-                    "timestamp" => date("YYYY-MM-DD HH:ii:ss"),
-                    "command" => $command,
-                    "comment" => $comment,
-                    "selectedbus"=>$selectedBus,
+                    "request" => array(
+                        "version" => $version,
+                        "key" => $this->apiKey,
+                        "account_id" => $this->accountID,
+                        "terminal_id" => $this->terminalID,
+                        "timestamp" => date("YYYY-MM-DD HH:ii:ss"),
+                        "command" => $command,
+                        "comment" => $comment,
+                        "selectedbus" => $selectedBus,
                         "command_parameters" => array(
-                            "voucher_numbers"=> $vouchersNumbers
+                            "voucher_numbers" => $vouchersNumbers
                         )
                     )
                 )
             );
-           
+
             $result = self::formatResult($this->client->post(
-                $this->url . "/process/datatraxvoucher.aspx",
+                $this->url . "process/datatraxvoucher.aspx",
                 array(
-                "form_params" => $body,
+                    "form_params" => $body,
                 )
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
+
     /**
      * Returns all languages.
      *
@@ -550,11 +573,11 @@ class RequestAPI extends APIParent
         //not params needed:
         try {
             $result = self::formatResult($this->client->get(
-                $this->url . "/xml/languages.aspx"
+                $this->url . "xml/languages.aspx"
             ), "xml");
         } catch (\Exception $e) {
-            $result["status"] ="error";
-            $result["content"] =  $e->getMessage();
+            $result["status"] = "error";
+            $result["content"] = $e->getMessage();
         }
         return $result;
     }
