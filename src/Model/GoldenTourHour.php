@@ -39,14 +39,19 @@ class GoldenTourHour extends InitialUtils
 
     protected function formatHour($hour)
     {
-        switch ($hour) {
-            case "Full Day":
-            case "Half Day":
-                $result = "00:00";
-                break;
-            default:
-                $result = $hour;
-                break;
+        if (isset(\DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$hour])) {
+            $result = "00:00";
+        } else {
+            switch ($hour) {
+                case "Full Day":
+                case "Half Day":
+
+                    $result = "00:00";
+                    break;
+                default:
+                    $result = trim(date("H:i", strtotime($hour)));
+                    break;
+            }
         }
         return $result;
 
