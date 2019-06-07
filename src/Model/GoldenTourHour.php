@@ -1,5 +1,6 @@
 <?php
-namespace  DoTravel\GoldenTour\Model;
+
+namespace DoTravel\GoldenTour\Model;
 
 use DoTravel\GoldenTour\Interfaces\InitialUtils;
 
@@ -22,14 +23,32 @@ class GoldenTourHour extends InitialUtils
         $block = null,
         $noblock = null,
         $available = null
-    ) {
+    )
+    {
         parent::__construct($data);
+
         if (!isset($data)) {
             $this->id = $id;
             $this->hour = $hour;
             $this->block = $block;
-            $this->noblock = $min;
-            $this->available = $name;
+            $this->noblock = $noblock;
+            $this->available = $available;
         }
+        $this->hour = $this->formatHour($this->hour);
+    }
+
+    protected function formatHour($hour)
+    {
+        switch ($hour) {
+            case "Full Day":
+            case "Half Day":
+                $result = "00:00";
+                break;
+            default:
+                $result = $hour;
+                break;
+        }
+        return $result;
+
     }
 }
