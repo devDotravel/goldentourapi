@@ -31,7 +31,7 @@ class RequestAPI extends APIParent
         );
         try {
             $result = self::formatResult($this->client->get(
-                $this->url . "xml/cities.aspx",
+                $this->url . "cities.aspx",
                 array(
                     "query" => $params,
                 )
@@ -60,7 +60,7 @@ class RequestAPI extends APIParent
                 "languageid" => \DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$language]
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "xml/categories.aspx",
+                $this->url . "categories.aspx",
                 array(
                     "query" => $params,
                 )
@@ -100,7 +100,7 @@ class RequestAPI extends APIParent
                 "languageid" => \DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$language]
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "xml/productlist.aspx",
+                $this->url . "productlist.aspx",
                 array(
                     "query" => $params,
                 )
@@ -130,7 +130,7 @@ class RequestAPI extends APIParent
                 "languageid" => \DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$language]
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "xml/productdetails.aspx",
+                $this->url . "productdetails.aspx",
                 array(
                     "query" => $params,
                 )
@@ -173,7 +173,7 @@ class RequestAPI extends APIParent
                 "picktimeid" => $picktimeid
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "xml/availability.aspx",
+                $this->url . "availability.aspx",
                 array(
                     "query" => $params,
                 )
@@ -210,7 +210,7 @@ class RequestAPI extends APIParent
                 "languageid" => \DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$language]
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "/xml/search.aspx",
+                $this->url . "/search.aspx",
                 array(
                     "query" => $params,
                 )
@@ -249,7 +249,7 @@ class RequestAPI extends APIParent
             ));
 
             $result = self::formatResult($this->client->post(
-                $this->url . "xml/paxreservation.aspx",
+                $this->url . "paxreservation.aspx",
                 array(
                     'headers' => [
                         'Content-Type' => 'text/xml; charset=UTF8',
@@ -307,7 +307,7 @@ class RequestAPI extends APIParent
             }
             $body = \DoTravel\GoldenTour\Utils\XMLSerializer::generateValidXmlFromArray($data, "Booking", "");
             $result = self::formatResult($this->client->post(
-                $this->url . "xml/booking.aspx",
+                $this->url . "booking.aspx",
                 array(
                     'headers' => [
                         'Content-Type' => 'text/xml; charset=UTF8',
@@ -342,7 +342,7 @@ class RequestAPI extends APIParent
                 "todt" => $to
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "xml/getproductdates.aspx",
+                $this->url . "getproductdates.aspx",
                 array(
                     "query" => $params,
                 )
@@ -375,7 +375,7 @@ class RequestAPI extends APIParent
             );
 
             $result = self::formatResult($this->client->get(
-                $this->url . "xml/getbookingdates.aspx",
+                $this->url . "getbookingdates.aspx",
                 array(
                     "query" => $params,
                 )
@@ -403,7 +403,7 @@ class RequestAPI extends APIParent
                 "languageid" => ResourcesAPI::$goldenTourLanguages[$languageid],
             );
             $result = self::formatResult($this->client->get(
-                $this->url . "xml/productidlist.aspx",
+                $this->url . "productidlist.aspx",
                 array(
                     "query" => $params,
                 )
@@ -430,7 +430,7 @@ class RequestAPI extends APIParent
             );
 
             $result = self::formatResult($this->client->get(
-                $this->url . "xml/getproductreviews.aspx",
+                $this->url . "getproductreviews.aspx",
                 array(
                     "query" => $params,
                 )
@@ -457,7 +457,7 @@ class RequestAPI extends APIParent
             );
 
             $result = self::formatResult($this->client->get(
-                $this->url . "xml/blockpickuppoint.aspx",
+                $this->url . "blockpickuppoint.aspx",
                 array(
                     "query" => $params,
                 )
@@ -573,7 +573,7 @@ class RequestAPI extends APIParent
         //not params needed:
         try {
             $result = self::formatResult($this->client->get(
-                $this->url . "xml/languages.aspx"
+                $this->url . "languages.aspx"
             ), "xml");
         } catch (\Exception $e) {
             $result["status"] = "error";
