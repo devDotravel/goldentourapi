@@ -48,6 +48,7 @@ class APIParent
                     break;
                 case "xml":
                     $dataFormatted = simplexml_load_string($data);
+
                     if (isset($dataFormatted->error)) {
                         $result["status"] = "error";
                         $result["content"] = $dataFormatted->error;
@@ -61,7 +62,13 @@ class APIParent
                             }
                         }
                     } else {
-                        $result["content"] = $dataFormatted;
+                        if (((string)$dataFormatted->head->title) == "ERROR - Page") {
+                            $result["status"] = "error";
+                            $result["content"] = "error on server";
+                        } else {
+                            $result["content"] = $dataFormatted;
+                        }
+
                     }
                     break;
             }
