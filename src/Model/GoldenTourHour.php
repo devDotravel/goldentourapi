@@ -39,7 +39,7 @@ class GoldenTourHour extends InitialUtils
 
     protected function formatHour($hour)
     {
-        if (isset(\DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$hour])) {
+        if (isset(\DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$hour]) || false === strtotime($hour)) {
             $result = "00:00";
         } else {
             switch ($hour) {
