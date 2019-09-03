@@ -18,6 +18,7 @@ class GoldenTourHour extends InitialUtils
 
     public function __construct(
         $data,
+        $format = true,
         $id = null,
         $hour = null,
         $block = null,
@@ -34,18 +35,18 @@ class GoldenTourHour extends InitialUtils
             $this->noblock = $noblock;
             $this->available = $available;
         }
-        $this->hour = $this->formatHour($this->hour);
+        $this->hour = $format ? $this->formatHour($this->hour) : $this->hour;
     }
 
     protected function formatHour($hour)
     {
+
         if (isset(\DoTravel\GoldenTour\Model\ResourcesAPI::$goldenTourLanguages[$hour]) || false === strtotime($hour)) {
             $result = "00:00";
         } else {
             switch ($hour) {
                 case "Full Day":
                 case "Half Day":
-
                     $result = "00:00";
                     break;
                 default:
@@ -54,6 +55,5 @@ class GoldenTourHour extends InitialUtils
             }
         }
         return $result;
-
     }
 }
